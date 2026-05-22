@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listening and Reading Activities - English 10th - Section 10-2</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #f4f6f9;
+    color: #1f2937;
+    line-height: 1.6;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  header.main {
+    background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 100%);
+    color: white;
+    padding: 30px 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(31, 78, 121, 0.2);
+  }
+  header.main h1 { font-size: 26px; margin-bottom: 6px; font-weight: 700; }
+  header.main .subtitle { font-size: 15px; opacity: 0.95; }
+  header.main .student-info {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    font-size: 14px;
+    display: flex; flex-wrap: wrap; gap: 8px 22px;
+  }
+
+  .instructions {
+    background: #FFF8E7;
+    border-left: 5px solid #F5A623;
+    padding: 16px 20px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+  .instructions h3 { color: #8a5800; font-size: 15px; margin-bottom: 8px; }
+  .instructions p { margin-bottom: 6px; }
+  .instructions strong { color: #1F4E79; }
+
+  .tabs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .tab-btn {
+    flex: 1 1 auto;
+    min-width: 160px;
+    padding: 10px 14px;
+    border: none;
+    background: transparent;
+    color: #4b5563;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+    text-align: center;
+    font-family: inherit;
+  }
+  .tab-btn:hover { background: #f0f4f9; color: #1F4E79; }
+  .tab-btn.active { background: #1F4E79; color: white; }
+  .tab-btn.completed { border-left: 4px solid #10b981; }
+
+  .activity-card {
+    display: none;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .activity-card.active { display: block; }
+  .activity-header {
+    padding: 20px 24px 16px;
+    border-bottom: 2px solid #f0f4f9;
+  }
+  .skill-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .skill-badge.listening { background: #DCE6F2; color: #1F4E79; }
+  .skill-badge.reading { background: #E2EFD9; color: #375623; }
+  .activity-header h2 { font-size: 20px; color: #111827; }
+
+  .step {
+    padding: 20px 24px;
+    border-bottom: 1px solid #f0f4f9;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .step-number {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #1F4E79; color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step-number.locked { background: #9ca3af; }
+  .step-title { font-size: 17px; font-weight: 700; color: #111827; }
+
+  .audio-wrap {
+    background: #fafbfc;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .audio-wrap audio { width: 100%; margin-bottom: 8px; }
+  .audio-note { font-size: 13px; color: #6b7280; }
+  .audio-missing {
+    background: #fef2f2;
+    border: 1px dashed #ef4444;
+    color: #991b1b;
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-top: 8px;
+    display: none;
+  }
+
+  .reading-text {
+    background: #fafbfc;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 15.5px;
+    line-height: 1.75;
+    font-family: Georgia, "Times New Roman", serif;
+    color: #1f2937;
+  }
+  .reading-text p { margin-bottom: 12px; }
+  .reading-text p:last-child { margin-bottom: 0; }
+
+  .vocab-help {
+    margin-top: 12px;
+    background: #f0f4f9;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .vocab-help strong { color: #1F4E79; }
+  .vocab-help .vword { display: inline-block; margin-right: 14px; margin-bottom: 4px; }
+  .vocab-help .vword b { color: #1F4E79; }
+
+  .question {
+    margin-bottom: 18px;
+    padding: 14px 16px;
+    background: #fafbfc;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+  }
+  .question-text { font-weight: 600; margin-bottom: 10px; color: #111827; }
+  .question-text .qnum {
+    display: inline-block;
+    background: #1F4E79; color: white;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 12px;
+    line-height: 22px;
+    margin-right: 8px;
+  }
+  .options { display: flex; flex-direction: column; gap: 6px; }
+  .option {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: white;
+  }
+  .option:hover { border-color: #2E75B6; background: #f0f7fc; }
+  .option input[type="radio"] { margin-top: 3px; accent-color: #1F4E79; cursor: pointer; flex-shrink: 0; }
+  .option label { cursor: pointer; flex: 1; font-size: 14.5px; }
+  .option.selected { border-color: #1F4E79; background: #f0f7fc; }
+  .option.correct { border-color: #10b981; background: #ecfdf5; }
+  .option.incorrect { border-color: #ef4444; background: #fef2f2; }
+  .option.correct::after { content: "Correct"; color: #10b981; font-weight: 700; margin-left: auto; font-size: 12px; align-self: center; }
+  .option.incorrect::after { content: "Incorrect"; color: #ef4444; font-weight: 700; margin-left: auto; font-size: 12px; align-self: center; }
+
+  .btn {
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary { background: #1F4E79; color: white; }
+  .btn-primary:hover { background: #163E5F; }
+  .btn-primary:disabled { background: #9ca3af; cursor: not-allowed; }
+  .btn-secondary { background: #e5e7eb; color: #374151; margin-left: 8px; }
+  .btn-secondary:hover { background: #d1d5db; }
+  .btn-row { margin-top: 14px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+
+  .feedback {
+    margin-top: 12px;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: #ecfdf5; border-left: 4px solid #10b981; color: #065f46; }
+  .feedback.incorrect { background: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; }
+  .feedback strong { display: block; margin-bottom: 4px; }
+
+  .score-display {
+    background: linear-gradient(135deg, #1F4E79, #2E75B6);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 16px;
+    display: none;
+  }
+  .score-display.show { display: block; }
+  .score-display .score-number { font-size: 36px; font-weight: 700; margin: 8px 0; }
+  .score-display .score-label { font-size: 13px; opacity: 0.9; }
+  .score-display .score-msg { font-size: 14px; margin-top: 8px; font-style: italic; }
+
+  .step.locked { opacity: 0.55; pointer-events: none; }
+  .step.locked .step-number { background: #9ca3af; }
+  .lock-msg { text-align: center; color: #6b7280; font-style: italic; font-size: 14px; padding: 14px; }
+
+  .summary-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-top: 20px;
+    display: none;
+  }
+  .summary-card.show { display: block; }
+  .summary-card h2 { color: #1F4E79; margin-bottom: 16px; font-size: 22px; }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 14px 0;
+  }
+  .summary-item { background: #f0f4f9; padding: 12px 16px; border-radius: 8px; text-align: center; }
+  .summary-item .label { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
+  .summary-item .value { font-size: 22px; font-weight: 700; color: #1F4E79; margin-top: 4px; }
+  .summary-total {
+    background: linear-gradient(135deg, #1F4E79, #548235);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 12px;
+  }
+  .summary-total .total-num { font-size: 42px; font-weight: 700; }
+
+  .action-bar {
+    background: white;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    font-size: 13px;
+  }
+  .progress-mini { color: #6b7280; }
+  .progress-mini strong { color: #1F4E79; }
+
+  @media print {
+    body { background: white; }
+    .tabs, .action-bar, .btn, .instructions, .audio-wrap { display: none !important; }
+    .activity-card { display: block !important; page-break-after: always; box-shadow: none; }
+    .step.locked { opacity: 1; pointer-events: auto; }
+    .feedback { display: block !important; }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 12px 10px 40px; }
+    header.main { padding: 22px 18px; }
+    header.main h1 { font-size: 22px; }
+    .activity-header, .step { padding: 16px; }
+    .reading-text { padding: 16px; font-size: 15px; }
+    .tab-btn { font-size: 12px; padding: 9px 10px; min-width: 130px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="main">
+    <h1>Listening and Reading Activities - English 10th</h1>
+    <div class="student-info">
+      <span><strong>Section:</strong> 10-2</span>
+      <span><strong>School:</strong> Colegio Nocturno de Cariari</span>
+      <span><strong>Subject:</strong> English</span>
+    </div>
+  </header>
+
+  <div class="instructions">
+    <h3>General Instructions</h3>
+    <p><strong>Step 1:</strong> Listen to the audio (or read the text) once. Try to understand the general idea: who it is about and what happens.</p>
+    <p><strong>Step 2:</strong> Answer one question about the general idea.</p>
+    <p><strong>Step 3:</strong> Listen again (or read again). This time, look for specific information: names, details, and key words.</p>
+    <p><strong>Step 4:</strong> Answer the four questions about specific details. You can listen or read again as many times as you need.</p>
+  </div>
+
+  <div class="action-bar">
+    <div class="progress-mini">
+      Activities completed: <strong id="progress-text">0 / 2</strong>
+    </div>
+    <div>
+      <button class="btn btn-secondary" onclick="window.print()">Print</button>
+      <button class="btn btn-secondary" onclick="resetAll()">Reset all</button>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="activities-container"></div>
+
+  <div class="summary-card" id="summary">
+    <h2>Final Result</h2>
+    <p style="margin-bottom:14px;">Here is the summary of your performance. Please share this result with your teacher.</p>
+    <div class="summary-grid" id="summary-grid"></div>
+    <div class="summary-total">
+      <div class="label" style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;opacity:0.9;">Total score</div>
+      <div class="total-num" id="total-num">0 / 0</div>
+      <div id="total-msg" style="margin-top:8px;font-style:italic;font-size:14px;"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// The full movie review text (used by both activities)
+const TEXT = [
+  "One movie I really enjoyed is The Pursuit of Happyness. It is an inspiring drama based on a true story, and it stars Will Smith. The movie is about a man named Chris Gardner who faces many difficult problems in life but never gives up on his dreams.",
+  "At the beginning of the movie, Chris struggles with money and cannot find stable work. He also has problems with his family and sometimes does not even have a place to sleep with his young son. Even though life is very hard for him, he continues working and searching for better opportunities. He studies, works hard, and stays positive because he wants a better future for his child.",
+  "One thing I like about this movie is its message about perseverance and hope. Chris shows that success is possible if a person keeps trying and never loses motivation. The movie is emotional because it shows realistic challenges that many people face in life, such as poverty, stress, and disappointment. However, it also teaches that determination and effort can help people overcome difficult situations.",
+  "The acting is excellent, especially from Will Smith, who makes the story feel very real and emotional. The relationship between Chris and his son is also very touching because it shows love, sacrifice, and support between a father and his child.",
+  "I would recommend this movie because it is motivating and inspiring. It reminds people that success does not come easily and that hard work is important. After watching it, many people feel encouraged to continue fighting for their goals and dreams, even during difficult times."
+];
+
+const VOCAB = [
+  ["inspiring", "making you feel motivated to do something"],
+  ["struggle", "to have difficulty with something"],
+  ["stable work", "a steady job that does not change"],
+  ["perseverance", "continuing to try even when it is difficult"],
+  ["determination", "the strong wish to keep doing something"],
+  ["overcome", "to succeed in dealing with a problem"],
+  ["touching", "causing strong feelings of emotion"],
+  ["encouraged", "given hope and confidence"]
+];
+
+const ACTIVITIES = [
+  // ---------- LISTENING (first) ----------
+  {
+    id: 1, skill: "listening", audio: "pursuit.mp3",
+    title: "A Movie Review - The Pursuit of Happyness",
+    mainIdea: {
+      question: "What is the speaker MAINLY talking about?",
+      options: [
+        "How to become a famous actor like Will Smith.",
+        "A movie they enjoyed about a man who never gives up on his dreams.",
+        "The history of the movie industry in the United States.",
+        "Why dramas are better than other types of movies."
+      ],
+      correct: 1,
+      explanation: "The speaker reviews the movie The Pursuit of Happyness and focuses on Chris Gardner, a man who never gives up on his dreams."
+    },
+    details: [
+      {
+        question: "Who stars in the movie?",
+        options: ["Denzel Washington", "Will Smith", "Chris Gardner", "Tom Hanks"],
+        correct: 1,
+        explanation: "The speaker says the movie \"stars Will Smith.\""
+      },
+      {
+        question: "What is the name of the main character?",
+        options: ["Will Smith", "Chris Gardner", "Chris Brown", "Gardner Smith"],
+        correct: 1,
+        explanation: "The speaker says the movie is about \"a man named Chris Gardner.\""
+      },
+      {
+        question: "What problems does Chris face at the beginning of the movie?",
+        options: [
+          "He is famous but unhappy.",
+          "He struggles with money and cannot find stable work.",
+          "He travels too much for his job.",
+          "He does not get along with his coworkers."
+        ],
+        correct: 1,
+        explanation: "The speaker says Chris \"struggles with money and cannot find stable work,\" and sometimes has no place to sleep with his son."
+      },
+      {
+        question: "According to the speaker, what is the main message of the movie?",
+        options: [
+          "Money is the most important thing in life.",
+          "Acting is a difficult career.",
+          "Perseverance and hope can help people overcome difficulties.",
+          "Family problems cannot be solved."
+        ],
+        correct: 2,
+        explanation: "The speaker highlights the movie's message about \"perseverance and hope,\" and that determination and effort help people overcome difficult situations."
+      }
+    ]
+  },
+
+  // ---------- READING (second) ----------
+  {
+    id: 2, skill: "reading",
+    title: "A Movie Review - The Pursuit of Happyness",
+    mainIdea: {
+      question: "What is the MAIN purpose of this text?",
+      options: [
+        "To explain how to make a movie.",
+        "To give a biography of Will Smith.",
+        "To review and recommend a movie the writer enjoyed.",
+        "To describe life in the United States."
+      ],
+      correct: 2,
+      explanation: "The text is a movie review: the writer describes the film, explains why they like it, and recommends it."
+    },
+    details: [
+      {
+        question: "What type of movie is The Pursuit of Happyness?",
+        options: [
+          "A comedy based on a cartoon.",
+          "An inspiring drama based on a true story.",
+          "A science fiction movie.",
+          "A horror movie."
+        ],
+        correct: 1,
+        explanation: "The text says it is \"an inspiring drama based on a true story.\""
+      },
+      {
+        question: "Why does Chris keep working and staying positive?",
+        options: [
+          "Because he wants to become famous.",
+          "Because he wants a better future for his child.",
+          "Because his boss tells him to.",
+          "Because he enjoys his job."
+        ],
+        correct: 1,
+        explanation: "The text says he stays positive \"because he wants a better future for his child.\""
+      },
+      {
+        question: "According to the writer, what makes the movie emotional?",
+        options: [
+          "The special effects and music.",
+          "It shows realistic challenges like poverty, stress, and disappointment.",
+          "It has a surprising ending.",
+          "It is very long."
+        ],
+        correct: 1,
+        explanation: "The text says the movie is emotional because it shows \"realistic challenges that many people face in life, such as poverty, stress, and disappointment.\""
+      },
+      {
+        question: "Why does the writer recommend the movie?",
+        options: [
+          "Because it is funny and relaxing.",
+          "Because it is short and easy to watch.",
+          "Because it is motivating and inspiring, and reminds people that hard work is important.",
+          "Because it has a famous director."
+        ],
+        correct: 2,
+        explanation: "The writer recommends it because it is \"motivating and inspiring\" and reminds people that success does not come easily and hard work is important."
+      }
+    ]
+  }
+];
+
+// ============================================================
+// STATE
+// ============================================================
+const state = { current: 1, answers: {} };
+ACTIVITIES.forEach(a => state.answers[a.id] = { mainIdea: null, details: {}, mainIdeaChecked: false, detailsChecked: false });
+
+try {
+  const saved = localStorage.getItem('activity_state_10_2_pursuit');
+  if (saved) Object.assign(state, JSON.parse(saved));
+} catch (e) {}
+
+function saveState() {
+  try { localStorage.setItem('activity_state_10_2_pursuit', JSON.stringify(state)); } catch (e) {}
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderTabs() {
+  const tabs = document.getElementById('tabs');
+  tabs.innerHTML = '';
+  ACTIVITIES.forEach(a => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (state.current === a.id ? ' active' : '');
+    if (isComplete(a.id)) btn.classList.add('completed');
+    btn.textContent = a.skill === 'listening' ? 'Listening Activity' : 'Reading Activity';
+    btn.onclick = () => { state.current = a.id; render(); window.scrollTo({top:0,behavior:'smooth'}); };
+    tabs.appendChild(btn);
+  });
+}
+
+function isComplete(id) {
+  const a = state.answers[id];
+  return a.mainIdeaChecked && a.detailsChecked;
+}
+
+function renderActivities() {
+  const container = document.getElementById('activities-container');
+  container.innerHTML = '';
+  ACTIVITIES.forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'activity-card' + (state.current === a.id ? ' active' : '');
+    const ans = state.answers[a.id];
+    const detailsUnlocked = ans.mainIdeaChecked;
+    const isListening = a.skill === 'listening';
+
+    // Step 1 content depends on skill
+    let step1Inner = '';
+    if (isListening) {
+      step1Inner = `
+        <div class="audio-wrap">
+          <audio controls preload="none" onerror="showAudioMissing(${a.id})">
+            <source src="${a.audio}" type="audio/mpeg">
+            Your browser does not support the audio player.
+          </audio>
+          <div class="audio-note">Audio file: ${a.audio}</div>
+          <div class="audio-missing" id="audio-missing-${a.id}">
+            The audio file was not found. Make sure <strong>${a.audio}</strong> is in the same folder as this page.
+          </div>
+        </div>`;
+    } else {
+      step1Inner = `
+        <div class="reading-text">
+          ${TEXT.map(p => `<p>${escapeHtml(p)}</p>`).join('')}
+        </div>`;
+    }
+
+    const step1Title = isListening ? 'Listen to the audio' : 'Read the text';
+    const step3Title = isListening ? 'Listen to the audio again' : 'Read the text again';
+
+    card.innerHTML = `
+      <div class="activity-header">
+        <div class="skill-badge ${a.skill}">${isListening ? 'Listening' : 'Reading'}</div>
+        <h2>${escapeHtml(a.title)}</h2>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <div class="step-title">${step1Title}</div>
+        </div>
+        ${step1Inner}
+        <div class="vocab-help">
+          <strong>Vocabulary help:</strong><br>
+          ${VOCAB.map(([en, def]) => `<span class="vword"><b>${en}</b>: ${def}</span>`).join('')}
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step">
+        <div class="step-header">
+          <div class="step-number">2</div>
+          <div class="step-title">Main idea question</div>
+        </div>
+        <div class="question" id="main-q-${a.id}">
+          <div class="question-text">${escapeHtml(a.mainIdea.question)}</div>
+          <div class="options">
+            ${a.mainIdea.options.map((opt, i) => `
+              <label class="option" data-i="${i}" onclick="selectMain(${a.id}, ${i})">
+                <input type="radio" name="main-${a.id}" ${ans.mainIdea === i ? 'checked' : ''}>
+                <span>${String.fromCharCode(65+i)}) ${escapeHtml(opt)}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="check-main-${a.id}" onclick="checkMain(${a.id})" ${ans.mainIdeaChecked ? 'disabled' : ''}>
+              ${ans.mainIdeaChecked ? 'Answer submitted' : 'Check answer'}
+            </button>
+          </div>
+          <div class="feedback" id="main-fb-${a.id}"></div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step ${detailsUnlocked ? '' : 'locked'}">
+        <div class="step-header">
+          <div class="step-number ${detailsUnlocked ? '' : 'locked'}">3</div>
+          <div class="step-title">${step3Title}</div>
+        </div>
+        ${!detailsUnlocked ? '<div class="lock-msg">Answer the main idea question first to unlock this section.</div>' : ''}
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step ${detailsUnlocked ? '' : 'locked'}">
+        <div class="step-header">
+          <div class="step-number ${detailsUnlocked ? '' : 'locked'}">4</div>
+          <div class="step-title">Detail questions</div>
+        </div>
+        ${!detailsUnlocked ? '<div class="lock-msg">This section unlocks after step 2.</div>' : `
+          ${a.details.map((q, qi) => `
+            <div class="question" id="detail-q-${a.id}-${qi}">
+              <div class="question-text"><span class="qnum">${qi+1}</span>${escapeHtml(q.question)}</div>
+              <div class="options">
+                ${q.options.map((opt, i) => `
+                  <label class="option" data-i="${i}" onclick="selectDetail(${a.id}, ${qi}, ${i})">
+                    <input type="radio" name="detail-${a.id}-${qi}" ${ans.details[qi] === i ? 'checked' : ''}>
+                    <span>${String.fromCharCode(65+i)}) ${escapeHtml(opt)}</span>
+                  </label>
+                `).join('')}
+              </div>
+              <div class="feedback" id="detail-fb-${a.id}-${qi}"></div>
+            </div>
+          `).join('')}
+          <div class="btn-row">
+            <button class="btn btn-primary" id="check-detail-${a.id}" onclick="checkDetails(${a.id})" ${ans.detailsChecked ? 'disabled' : ''}>
+              ${ans.detailsChecked ? 'Answers submitted' : 'Check all answers'}
+            </button>
+          </div>
+          <div class="score-display" id="score-${a.id}"></div>
+        `}
+      </div>
+    `;
+    container.appendChild(card);
+
+    if (ans.mainIdeaChecked) showMainFeedback(a.id);
+    if (ans.detailsChecked) showDetailFeedback(a.id);
+  });
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function showAudioMissing(id) {
+  const el = document.getElementById(`audio-missing-${id}`);
+  if (el) el.style.display = 'block';
+}
+
+function updateProgress() {
+  const done = ACTIVITIES.filter(a => isComplete(a.id)).length;
+  document.getElementById('progress-text').textContent = `${done} / ${ACTIVITIES.length}`;
+  if (done === ACTIVITIES.length) showSummary();
+}
+
+function render() {
+  renderTabs();
+  renderActivities();
+  updateProgress();
+  saveState();
+}
+
+// ============================================================
+// INTERACTIONS
+// ============================================================
+function selectMain(id, i) {
+  if (state.answers[id].mainIdeaChecked) return;
+  state.answers[id].mainIdea = i;
+  document.querySelectorAll(`input[name="main-${id}"]`).forEach((r, idx) => r.checked = idx === i);
+  document.querySelectorAll(`#main-q-${id} .option`).forEach((opt, idx) => opt.classList.toggle('selected', idx === i));
+  saveState();
+}
+
+function checkMain(id) {
+  const ans = state.answers[id];
+  if (ans.mainIdea === null) { alert("Please select an option before checking."); return; }
+  ans.mainIdeaChecked = true;
+  showMainFeedback(id);
+  saveState();
+  render();
+}
+
+function showMainFeedback(id) {
+  const a = ACTIVITIES.find(x => x.id === id);
+  const ans = state.answers[id];
+  const correct = a.mainIdea.correct;
+  const fb = document.getElementById(`main-fb-${id}`);
+  document.querySelectorAll(`#main-q-${id} .option`).forEach((o, i) => {
+    o.classList.remove('selected', 'correct', 'incorrect');
+    if (i === correct) o.classList.add('correct');
+    else if (i === ans.mainIdea) o.classList.add('incorrect');
+    o.style.pointerEvents = 'none';
+  });
+  const isRight = ans.mainIdea === correct;
+  if (fb) {
+    fb.className = 'feedback show ' + (isRight ? 'correct' : 'incorrect');
+    fb.innerHTML = `<strong>${isRight ? 'Correct!' : 'Incorrect'}</strong>${escapeHtml(a.mainIdea.explanation)}${!isRight ? `<br><br><em>Correct answer: ${String.fromCharCode(65+correct)}) ${escapeHtml(a.mainIdea.options[correct])}</em>` : ''}`;
+  }
+  const btn = document.getElementById(`check-main-${id}`);
+  if (btn) { btn.disabled = true; btn.textContent = 'Answer submitted'; }
+}
+
+function selectDetail(id, qi, i) {
+  if (state.answers[id].detailsChecked) return;
+  state.answers[id].details[qi] = i;
+  document.querySelectorAll(`input[name="detail-${id}-${qi}"]`).forEach((r, idx) => r.checked = idx === i);
+  document.querySelectorAll(`#detail-q-${id}-${qi} .option`).forEach((opt, idx) => opt.classList.toggle('selected', idx === i));
+  saveState();
+}
+
+function checkDetails(id) {
+  const a = ACTIVITIES.find(x => x.id === id);
+  const ans = state.answers[id];
+  const unanswered = a.details.filter((_, qi) => ans.details[qi] === undefined || ans.details[qi] === null).length;
+  if (unanswered > 0) {
+    if (!confirm(`There are still ${unanswered} unanswered question(s). Do you want to check anyway?`)) return;
+  }
+  ans.detailsChecked = true;
+  showDetailFeedback(id);
+  saveState();
+  render();
+}
+
+function showDetailFeedback(id) {
+  const a = ACTIVITIES.find(x => x.id === id);
+  const ans = state.answers[id];
+  let correct = 0;
+  a.details.forEach((q, qi) => {
+    const fb = document.getElementById(`detail-fb-${id}-${qi}`);
+    const userAns = ans.details[qi];
+    document.querySelectorAll(`#detail-q-${id}-${qi} .option`).forEach((o, i) => {
+      o.classList.remove('selected', 'correct', 'incorrect');
+      if (i === q.correct) o.classList.add('correct');
+      else if (i === userAns) o.classList.add('incorrect');
+      o.style.pointerEvents = 'none';
+    });
+    const isRight = userAns === q.correct;
+    if (isRight) correct++;
+    if (fb) {
+      fb.className = 'feedback show ' + (isRight ? 'correct' : 'incorrect');
+      fb.innerHTML = `<strong>${isRight ? 'Correct!' : (userAns === undefined ? 'No answer' : 'Incorrect')}</strong>${escapeHtml(q.explanation)}`;
+    }
+  });
+  const total = a.details.length;
+  const pct = Math.round((correct / total) * 100);
+  const scoreDiv = document.getElementById(`score-${id}`);
+  if (scoreDiv) {
+    scoreDiv.classList.add('show');
+    let msg = "";
+    if (pct === 100) msg = "Excellent! Perfect score.";
+    else if (pct >= 75) msg = "Very good! Solid understanding of the details.";
+    else if (pct >= 50) msg = "Good. Review and focus on key words.";
+    else msg = "Review the material more carefully and try again.";
+    scoreDiv.innerHTML = `<div class="score-label">Score</div><div class="score-number">${correct} / ${total}</div><div class="score-label">${pct}%</div><div class="score-msg">${msg}</div>`;
+  }
+  const btn = document.getElementById(`check-detail-${id}`);
+  if (btn) { btn.disabled = true; btn.textContent = 'Answers submitted'; }
+}
+
+function showSummary() {
+  const summary = document.getElementById('summary');
+  summary.classList.add('show');
+  const grid = document.getElementById('summary-grid');
+  let totalCorrect = 0, totalQuestions = 0, html = '';
+  ACTIVITIES.forEach(a => {
+    const ans = state.answers[a.id];
+    let c = 0, t = a.details.length + 1;
+    if (ans.mainIdea === a.mainIdea.correct) c++;
+    a.details.forEach((q, qi) => { if (ans.details[qi] === q.correct) c++; });
+    totalCorrect += c; totalQuestions += t;
+    html += `<div class="summary-item"><div class="label">${a.skill === 'listening' ? 'Listening Activity' : 'Reading Activity'}</div><div class="value">${c} / ${t}</div></div>`;
+  });
+  grid.innerHTML = html;
+  const pct = Math.round((totalCorrect / totalQuestions) * 100);
+  document.getElementById('total-num').textContent = `${totalCorrect} / ${totalQuestions} (${pct}%)`;
+  let msg = "";
+  if (pct >= 90) msg = "Outstanding performance. Congratulations!";
+  else if (pct >= 80) msg = "Very good performance. Keep practicing.";
+  else if (pct >= 70) msg = "Good performance. Review the parts where you missed questions.";
+  else if (pct >= 60) msg = "Acceptable performance. Practice more often.";
+  else msg = "More practice is needed. Please coordinate with your teacher.";
+  document.getElementById('total-msg').textContent = msg;
+}
+
+function resetAll() {
+  if (!confirm("Are you sure you want to reset ALL activities? Your progress will be lost.")) return;
+  ACTIVITIES.forEach(a => state.answers[a.id] = { mainIdea: null, details: {}, mainIdeaChecked: false, detailsChecked: false });
+  state.current = 1;
+  saveState();
+  document.getElementById('summary').classList.remove('show');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+render();
+</script>
+</body>
+</html>
