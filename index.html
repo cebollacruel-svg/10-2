@@ -357,6 +357,26 @@ const TEXT = [
   "I would recommend this movie because it is motivating and inspiring. It reminds people that success does not come easily and that hard work is important. After watching it, many people feel encouraged to continue fighting for their goals and dreams, even during difficult times."
 ];
 
+// Separate reading passage (about movies, but different from the audio)
+const READING_TEXT = [
+  "Going to the cinema is one of the most popular activities in the world. Every weekend, millions of people buy tickets, get some popcorn, and sit in a dark room to watch a film on a big screen. But have you ever wondered why people enjoy the movies so much?",
+  "One reason is that movies let us escape from real life for a few hours. When the lights go off and the film begins, we can forget about our problems and enter a different world. We can travel to space, visit other countries, or live in the past or the future, all without leaving our seat.",
+  "Movies also help us feel many emotions. A good comedy can make us laugh, an action film can make us feel excited, and a sad story can even make us cry. Many people say that watching a film with friends or family is a great way to share these feelings and spend time together.",
+  "Another reason is that movies can teach us important lessons. Some films are based on true stories and show us real problems in society. Others teach us about history, science, or different cultures. In this way, the cinema is not only fun but also a way to learn something new.",
+  "Today, people can also watch movies at home on streaming platforms. This is comfortable and cheaper, but many people still prefer the cinema. The big screen, the loud sound, and the special atmosphere make the experience feel special. For these reasons, the cinema will probably stay popular for many years."
+];
+
+const READING_VOCAB = [
+  ["cinema", "a place where people go to watch movies"],
+  ["screen", "the flat surface where the movie is shown"],
+  ["escape", "to get away from something"],
+  ["emotions", "strong feelings such as joy or sadness"],
+  ["lesson", "something useful that you learn"],
+  ["streaming platforms", "online services to watch movies, like Netflix"],
+  ["atmosphere", "the feeling or mood of a place"],
+  ["comfortable", "relaxed and pleasant"]
+];
+
 const VOCAB = [
   ["inspiring", "making you feel motivated to do something"],
   ["struggle", "to have difficulty with something"],
@@ -425,62 +445,62 @@ const ACTIVITIES = [
   // ---------- READING (second) ----------
   {
     id: 2, skill: "reading",
-    title: "A Movie Review - The Pursuit of Happyness",
+    title: "Why Do People Love the Cinema?",
     mainIdea: {
       question: "What is the MAIN purpose of this text?",
       options: [
-        "To explain how to make a movie.",
-        "To give a biography of Will Smith.",
-        "To review and recommend a movie the writer enjoyed.",
-        "To describe life in the United States."
+        "To recommend one specific movie to watch.",
+        "To explain why people enjoy going to the cinema.",
+        "To teach how movies are made.",
+        "To compare two famous actors."
       ],
-      correct: 2,
-      explanation: "The text is a movie review: the writer describes the film, explains why they like it, and recommends it."
+      correct: 1,
+      explanation: "The text explains several reasons why going to the cinema is popular and why people enjoy watching movies."
     },
     details: [
       {
-        question: "What type of movie is The Pursuit of Happyness?",
+        question: "According to the text, what is one reason people enjoy movies?",
         options: [
-          "A comedy based on a cartoon.",
-          "An inspiring drama based on a true story.",
-          "A science fiction movie.",
-          "A horror movie."
+          "Movies are always free.",
+          "Movies let us escape from real life for a few hours.",
+          "Movies are very short.",
+          "Movies are only about space travel."
         ],
         correct: 1,
-        explanation: "The text says it is \"an inspiring drama based on a true story.\""
+        explanation: "The text says movies \"let us escape from real life for a few hours.\""
       },
       {
-        question: "Why does Chris keep working and staying positive?",
+        question: "What emotions does the text say movies can make us feel?",
         options: [
-          "Because he wants to become famous.",
-          "Because he wants a better future for his child.",
-          "Because his boss tells him to.",
-          "Because he enjoys his job."
-        ],
-        correct: 1,
-        explanation: "The text says he stays positive \"because he wants a better future for his child.\""
-      },
-      {
-        question: "According to the writer, what makes the movie emotional?",
-        options: [
-          "The special effects and music.",
-          "It shows realistic challenges like poverty, stress, and disappointment.",
-          "It has a surprising ending.",
-          "It is very long."
-        ],
-        correct: 1,
-        explanation: "The text says the movie is emotional because it shows \"realistic challenges that many people face in life, such as poverty, stress, and disappointment.\""
-      },
-      {
-        question: "Why does the writer recommend the movie?",
-        options: [
-          "Because it is funny and relaxing.",
-          "Because it is short and easy to watch.",
-          "Because it is motivating and inspiring, and reminds people that hard work is important.",
-          "Because it has a famous director."
+          "Only happiness.",
+          "Only fear.",
+          "Laughter, excitement, and even sadness.",
+          "No emotions at all."
         ],
         correct: 2,
-        explanation: "The writer recommends it because it is \"motivating and inspiring\" and reminds people that success does not come easily and hard work is important."
+        explanation: "The text says a comedy can make us laugh, an action film can make us feel excited, and a sad story can make us cry."
+      },
+      {
+        question: "How can movies teach us important lessons?",
+        options: [
+          "By being based on true stories and showing real problems in society.",
+          "By being only about cartoons.",
+          "By being silent and short.",
+          "By using only special effects."
+        ],
+        correct: 0,
+        explanation: "The text says some films \"are based on true stories and show us real problems in society,\" and others teach about history, science, or cultures."
+      },
+      {
+        question: "Why do many people still prefer the cinema instead of watching at home?",
+        options: [
+          "Because it is always cheaper than streaming.",
+          "Because the big screen, the loud sound, and the special atmosphere make the experience feel special.",
+          "Because there are no movies on streaming platforms.",
+          "Because the cinema is closer to their homes."
+        ],
+        correct: 1,
+        explanation: "The text says \"the big screen, the loud sound, and the special atmosphere make the experience feel special.\""
       }
     ]
   }
@@ -549,7 +569,7 @@ function renderActivities() {
     } else {
       step1Inner = `
         <div class="reading-text">
-          ${TEXT.map(p => `<p>${escapeHtml(p)}</p>`).join('')}
+          ${READING_TEXT.map(p => `<p>${escapeHtml(p)}</p>`).join('')}
         </div>`;
     }
 
@@ -571,7 +591,7 @@ function renderActivities() {
         ${step1Inner}
         <div class="vocab-help">
           <strong>Vocabulary help:</strong><br>
-          ${VOCAB.map(([en, def]) => `<span class="vword"><b>${en}</b>: ${def}</span>`).join('')}
+          ${(isListening ? VOCAB : READING_VOCAB).map(([en, def]) => `<span class="vword"><b>${en}</b>: ${def}</span>`).join('')}
         </div>
       </div>
 
